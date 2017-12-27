@@ -92,6 +92,47 @@ int PointCloud::pointCount()
     return cloudPtr->points.size();
 }
 
-pcl::PointCloud <pcl::PointXYZRGB>::Ptr PointCloud::getCloudPtr() {
+pcl::PointCloud <pcl::PointXYZRGB>::Ptr PointCloud::getCloudPtr() 
+{
     return cloudPtr;
+}
+
+void PointCloud::printFirstElement() 
+{
+    for (int i = 0; i < 10; i++) 
+    {
+        std::cout << "(" << cloudPtr->points[i].x << " " << cloudPtr->points[i].y << " ";
+        std::cout << cloudPtr->points[i].z << ") " << cloudPtr->points[i].rgb << std::endl;
+    }
+}
+
+void PointCloud::normalizePoints() {
+
+    double maxx = -100000, maxy = -100000, maxz = -1000000;
+    double minx = 10000000000, miny = 1000000000, minz = 1000000000;
+
+    // find extremes
+    for (int i = 0; i < cloudPtr->points.size(); i++) 
+    {
+        double x = cloudPtr->points[i].x;
+        double y = cloudPtr->points[i].y;
+        double z = cloudPtr->points[i].z;
+        if (x > maxx) maxx = x;
+        if (y > maxy) maxy = y;
+        if (z > maxz) maxz = z;
+        if (x < minx) minx = x;
+        if (y < miny) miny = y;
+        if (z < minz) minz = z;
+    }
+
+    for (int i = 0; i < cloudPtr->points.size(); i++) 
+    {
+        double newx = (cloudPtr->points[i].x - minx) / (maxx - minx) * 100.0;
+        double newy = (cloudPtr->points[i].y - miny) / (maxy - miny) * 100.0;
+        double newz = (cloudPtr->points[i].z - minz) / (maxz - minz) * 100.0;
+        cloudPtr->points[i].x = newx;
+        cloudPtr->points[i].y = newy;
+        cloudPtr->points[i].z = newz;
+    }
+
 }

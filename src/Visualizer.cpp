@@ -12,7 +12,8 @@
 
 #include <string>
 
-Visualizer::Visualizer() : viewer(new boost::shared_ptr<pcl::visualization::PCLVisualizer>)
+Visualizer::Visualizer()
+    : viewer(new pcl::visualization::PCLVisualizer)
 {
 
 }
@@ -32,7 +33,7 @@ Visualizer Visualizer::simpleVisualizer(pcl::PointCloud<pcl::PointXYZ>::ConstPtr
 Visualizer Visualizer::rgbVisualizer(pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr cloud) 
 {
     Visualizer vis;
-	vis.viewer->setBackgroundColor(0, 0, 0);
+	vis.viewer->setBackgroundColor(1, 1, 1);
 	pcl::visualization::PointCloudColorHandlerRGBField<pcl::PointXYZRGB> rgb(cloud);
 	vis.viewer->addPointCloud<pcl::PointXYZRGB> (cloud, rgb, "sample cloud");
 	vis.viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 3, "sample cloud");

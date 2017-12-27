@@ -22,6 +22,7 @@ public:
     static PointCloud fromPCD(const std::string& filename);
     int pointCount();
     pcl::PointCloud <pcl::PointXYZRGB>::Ptr getCloudPtr();
-
+    void printFirstElement();
+    void normalizePoints();
 
 };

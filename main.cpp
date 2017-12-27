@@ -115,21 +115,21 @@ int main(int argc, char* argv[]) {
 	PointCloud cloud = PointCloud::fromLAS(argv[1]);
 	cout << cloud.pointCount() << endl;
 
+	cloud.normalizePoints();
+	cloud.printFirstElement();
+
 	// visualize the data
 	Visualizer vs = Visualizer::rgbVisualizer(cloud.getCloudPtr());
-	/*while (!vs.getViewer()->wasStopped())
+	while (!vs.getViewer()->wasStopped())
 	{
 		vs.getViewer()->spinOnce(100);
 		boost::this_thread::sleep(boost::posix_time::microseconds(100000));
-	}*/
+	}
 
 	return (0);
-	
-	
-
 }
 
-int kurac(int argc, char* argv[])
+int krneki(int argc, char* argv[])
 {
 	if (argc < 2)
 	{
@@ -193,8 +193,8 @@ int kurac(int argc, char* argv[])
 
 	while (!viewer->wasStopped())
 	{
-		viewer->spinOnce(100);
-		boost::this_thread::sleep(boost::posix_time::microseconds(100000));
+		viewer->spinOnce(1000);
+		boost::this_thread::sleep(boost::posix_time::microseconds(1000000));
 	}
 
 	return (0);
