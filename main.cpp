@@ -11,7 +11,9 @@
 #include <pcl/visualization/cloud_viewer.h>
 #include <pcl/filters/passthrough.h>
 #include <pcl/segmentation/region_growing_rgb.h>
+
 #include "PointCloud.hpp"
+#include "Visualizer.hpp"
 
 using namespace std;
 
@@ -101,8 +103,33 @@ void readLasToPCLCloud(const char* filePath, pcl::PointCloud <pcl::PointXYZRGB>:
 	}
 }
 
+int main(int argc, char* argv[]) {
+	if (argc < 2)
+	{
+		cout << "Usage: " << argv[0] << " <pcd file>" << endl;
+		return 1;
+	}
 
-int main(int argc, char* argv[])
+	// load the data
+	pcl::search::Search <pcl::PointXYZRGB>::Ptr tree = boost::shared_ptr<pcl::search::Search<pcl::PointXYZRGB> > (new pcl::search::KdTree<pcl::PointXYZRGB>);
+	PointCloud cloud = PointCloud::fromLAS(argv[1]);
+	cout << cloud.pointCount() << endl;
+
+	// visualize the data
+	Visualizer vs = Visualizer::rgbVisualizer(cloud.getCloudPtr());
+	/*while (!vs.getViewer()->wasStopped())
+	{
+		vs.getViewer()->spinOnce(100);
+		boost::this_thread::sleep(boost::posix_time::microseconds(100000));
+	}*/
+
+	return (0);
+	
+	
+
+}
+
+int kurac(int argc, char* argv[])
 {
 	if (argc < 2)
 	{
@@ -110,6 +137,7 @@ int main(int argc, char* argv[])
 		return 1;
 	}
 
+	
 	pcl::search::Search <pcl::PointXYZRGB>::Ptr tree = boost::shared_ptr<pcl::search::Search<pcl::PointXYZRGB> > (new pcl::search::KdTree<pcl::PointXYZRGB>);
 	pcl::PointCloud <pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud <pcl::PointXYZRGB>);
 	readLasToPCLCloud(argv[1], cloud);

@@ -9,7 +9,10 @@
 #include <pcl/visualization/cloud_viewer.h>
 #include <pcl/filters/passthrough.h>
 #include <pcl/segmentation/region_growing_rgb.h>
+
 #include <string>
+#include <stdexcept>
+#include <iostream>
 
 PointCloud::PointCloud()
     : cloudPtr(new pcl::PointCloud <pcl::PointXYZRGB>)
@@ -27,8 +30,7 @@ PointCloud PointCloud::fromLAS(const std::string& filename)
 	// Safeguard against opening failure
 	if (ifs.fail())
 	{
-		std::cerr << "ERROR : Impossible to open the file : " << filePath <<std::endl;
-		return;
+		throw std::runtime_error("Reading " + filename + " failed. Impossible to open the file.");
 	}
 
 	liblas::ReaderFactory f;
@@ -41,7 +43,7 @@ PointCloud PointCloud::fromLAS(const std::string& filename)
 	cloud.is_dense = false;
 	cloud.points.resize(cloud.width * cloud.height);
 
-	cout << "INFO : " << cloud.points.size() << " points detected in " << filePath << endl;
+	cout << "INFO : " << cloud.points.size() << " points detected in " << filename << endl;
 
 	int i=0;				// counter
 	uint16_t r1, g1, b1;	// RGB variables for .las (16-bit coded)
@@ -80,7 +82,16 @@ PointCloud PointCloud::fromPCD(const std::string& filename)
 {
     PointCloud pc;
 	auto& cloud = pc.cloudPtr;
-    if ( pcl::io::loadPCDFile <pcl::PointXYZ> (filename, *cloud) == -1)
-        throw runtime_error("Reading " + filename + " failed.");
+    if ( pcl::io::loadPCDFile <pcl::PointXYZRGB> (filename, *cloud) == -1)
+        throw std::runtime_error("Reading " + filename + " failed.");
     return pc;
+}
+
+int PointCloud::pointCount()
+{
+    return cloudPtr->points.size();
+}
+
+pcl::PointCloud <pcl::PointXYZRGB>::Ptr PointCloud::getCloudPtr() {
+    return cloudPtr;
 }

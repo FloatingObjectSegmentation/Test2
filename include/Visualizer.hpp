@@ -7,21 +7,15 @@
 #include <pcl/visualization/cloud_viewer.h>
 #include <pcl/filters/passthrough.h>
 #include <pcl/segmentation/region_growing_rgb.h>
-
 #include <string>
-#include <iostream>
-#include <exception>
 
-class PointCloud 
+class Visualizer
 {
-    pcl::PointCloud <pcl::PointXYZRGB>::Ptr cloudPtr;
-    PointCloud();
+    boost::shared_ptr<pcl::visualization::PCLVisualizer> viewer;
+    Visualizer();
 
 public: 
-    static PointCloud fromLAS(const std::string& filename);
-    static PointCloud fromPCD(const std::string& filename);
-    int pointCount();
-    pcl::PointCloud <pcl::PointXYZRGB>::Ptr getCloudPtr();
-
-
+    static Visualizer simpleVisualizer(pcl::PointCloud<pcl::PointXYZ>::ConstPtr cloud);
+    static Visualizer rgbVisualizer(pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr cloud);
+    boost::shared_ptr<pcl::visualization::PCLVisualizer> getViewer();
 };
