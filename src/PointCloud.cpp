@@ -127,12 +127,20 @@ void PointCloud::normalizePoints() {
 
     for (int i = 0; i < cloudPtr->points.size(); i++) 
     {
-        double newx = (cloudPtr->points[i].x - minx) / (maxx - minx) * 100.0;
-        double newy = (cloudPtr->points[i].y - miny) / (maxy - miny) * 100.0;
-        double newz = (cloudPtr->points[i].z - minz) / (maxz - minz) * 100.0;
+        double newx = (cloudPtr->points[i].x - minx) / (maxx - minx) * 100.0 - 50.0;
+        double newy = (cloudPtr->points[i].y - miny) / (maxy - miny) * 100.0 - 50.0;
+        double newz = (cloudPtr->points[i].z - minz) / (maxz - minz) * 50.0 - 30.0;
         cloudPtr->points[i].x = newx;
         cloudPtr->points[i].y = newy;
         cloudPtr->points[i].z = newz;
     }
+
+    std::cout << '\n\n\n\n' << typeid(cloudPtr->points).name() << '\n';
+    std::vector<pcl::PointXYZRGB,Eigen::aligned_allocator<pcl::PointXYZRGB>> vec;
+    for (int i = 0; i < cloudPtr->points.size(); i += 10) 
+    {
+        vec.push_back(cloudPtr->points[i]);
+    }
+    cloudPtr->points = vec;
 
 }

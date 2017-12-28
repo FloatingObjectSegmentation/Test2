@@ -39,10 +39,18 @@ Visualizer Visualizer::rgbVisualizer(pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr
 	vis.viewer->setPointCloudRenderingProperties(pcl::visualization::PCL_VISUALIZER_POINT_SIZE, 3, "sample cloud");
 	vis.viewer->addCoordinateSystem(1.0);
 	vis.viewer->initCameraParameters();
-	return vis;   
+	return vis;
 }
 
 boost::shared_ptr<pcl::visualization::PCLVisualizer> Visualizer::getViewer() 
 {
     return viewer;
+}
+
+void Visualizer::mainLoop() {
+    while (!viewer->wasStopped())
+	{
+		viewer->spinOnce(100);
+		boost::this_thread::sleep(boost::posix_time::microseconds(100000));
+	}
 }

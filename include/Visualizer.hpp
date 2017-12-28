@@ -18,4 +18,5 @@ public:
     static Visualizer simpleVisualizer(pcl::PointCloud<pcl::PointXYZ>::ConstPtr cloud);
     static Visualizer rgbVisualizer(pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr cloud);
     boost::shared_ptr<pcl::visualization::PCLVisualizer> getViewer();
+    void mainLoop();
 };
