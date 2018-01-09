@@ -11,6 +11,7 @@
 #include <pcl/segmentation/region_growing_rgb.h>
 
 #include <string>
+#include <vector>
 #include <stdexcept>
 #include <iostream>
 
@@ -57,6 +58,13 @@ PointCloud PointCloud::fromLAS(const std::string& filename)
 		cloud.points[i].y = (reader.GetPoint().GetY());
 		cloud.points[i].z = (reader.GetPoint().GetZ());
 
+        pc.intensities.push_back(reader.GetPoint().GetIntensity());
+        pc.returnNumbers.push_back(reader.GetPoint().GetReturnNumber());
+        pc.numbersOfReturns.push_back(reader.GetPoint().GetNumberOfReturns());
+        pc.scanDirections.push_back(reader.GetPoint().GetScanDirection());
+        pc.scanAngleRanks.push_back(reader.GetPoint().GetScanAngleRank());
+        pc.flightEdgeLines.push_back(reader.GetPoint().GetFlightLineEdge());
+
 		// get RGB information. Note: in liblas, the "Color" class can be accessed from within the "Point" class, thus the triple gets
 		r1 = (reader.GetPoint().GetColor().GetRed());
 		g1 = (reader.GetPoint().GetColor().GetGreen());
@@ -95,6 +103,27 @@ int PointCloud::pointCount()
 pcl::PointCloud <pcl::PointXYZRGB>::Ptr PointCloud::getCloudPtr() 
 {
     return cloudPtr;
+}
+
+pcl::PointCloud <pcl::PointXYZI> PointCloud::getIntensityCloudPtr()
+{
+    pcl::PointCloud<pcl::PointXYZI> cld;
+
+    // Fill in the cloud data
+	cld.width    = cloudPtr->points.size();	// This means that the point cloud is "unorganized"
+	cld.height   = 1;						// (i.e. not a depth map)
+	cld.is_dense = false;
+	cld.points.resize(cloudPtr->points.size());
+
+    for (int i = 0; i < cloudPtr->points.size(); i++) 
+    {
+        cld.points[i].x = cloudPtr->points[i].x;
+        cld.points[i].y = cloudPtr->points[i].y;
+        cld.points[i].z = cloudPtr->points[i].z;
+        cld.points[i].intensity = intensities[i];
+    }
+    
+    return cld;
 }
 
 void PointCloud::printFirstElement() 

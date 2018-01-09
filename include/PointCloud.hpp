@@ -9,12 +9,23 @@
 #include <pcl/segmentation/region_growing_rgb.h>
 
 #include <string>
+#include <vector>
 #include <iostream>
 #include <exception>
 
 class PointCloud 
 {
+    // main points
     pcl::PointCloud <pcl::PointXYZRGB>::Ptr cloudPtr;
+    
+    // additional LiDAR attributes
+    std::vector<uint16_t> intensities;
+    std::vector<uint16_t> returnNumbers;
+    std::vector<uint16_t> numbersOfReturns;
+    std::vector<uint16_t> scanDirections;
+    std::vector<uint8_t> scanAngleRanks;
+    std::vector<uint16_t> flightEdgeLines;
+
     PointCloud();
 
 public: 
@@ -22,6 +33,7 @@ public:
     static PointCloud fromPCD(const std::string& filename);
     int pointCount();
     pcl::PointCloud <pcl::PointXYZRGB>::Ptr getCloudPtr();
+    pcl::PointCloud <pcl::PointXYZI> getIntensityCloudPtr();
     void printFirstElement();
     void normalizePoints();
 

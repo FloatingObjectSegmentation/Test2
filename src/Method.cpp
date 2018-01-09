@@ -2,7 +2,8 @@
 #include <iostream>
 
 pcl::PointCloud <pcl::PointXYZRGB>::Ptr Method::computeSegmentation(pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr cloud) {
-    std::cout << "Jebem ti mater";
+    std::cout << "Null";
+    return NULL;
 }
 
 void Method::setWidth(int w) {

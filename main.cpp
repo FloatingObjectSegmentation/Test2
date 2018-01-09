@@ -38,9 +38,8 @@ int main(int argc, char* argv[]) {
 
 	cloud.normalizePoints();
 
-	ProgressiveMorphologicalFilter met;
+	RegionGrowingRGB met;
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr seg = met.computeSegmentation(cloud.getCloudPtr());
-
 
 	// visualize the data
 	Visualizer vs = Visualizer::rgbVisualizer(seg);
