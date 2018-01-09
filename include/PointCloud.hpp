@@ -26,9 +26,8 @@ class PointCloud
     std::vector<uint8_t> scanAngleRanks;
     std::vector<uint16_t> flightEdgeLines;
 
-    PointCloud();
-
 public: 
+    PointCloud();
     static PointCloud fromLAS(const std::string& filename);
     static PointCloud fromPCD(const std::string& filename);
     int pointCount();

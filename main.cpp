@@ -34,7 +34,7 @@ int main(int argc, char* argv[]) {
 	}
 
 	PointCloud cloud = PointCloud::fromLAS(argv[1]);
-	cout << cloud.pointCount() << endl;
+	cout << "Point count: " << cloud.pointCount() << endl;
 
 	cloud.normalizePoints();
 
