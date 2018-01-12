@@ -15,8 +15,12 @@
 
 using namespace std;
 
-pcl::PointCloud <pcl::PointXYZRGB>::Ptr RegionGrowingRGB::computeSegmentation(pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr cloud) {
+pcl::PointCloud <pcl::PointXYZRGB>::Ptr RegionGrowingRGB::computeSegmentation(pcl::PointCloud<pcl::PointXYZRGB>::ConstPtr cld) {
     
+    pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud;
+    cloud = pcl::PointCloud<pcl::PointXYZRGB>::Ptr (new pcl::PointCloud<pcl::PointXYZRGB>);
+    copyPointCloud(*cld, *cloud);
+
     pcl::search::Search <pcl::PointXYZRGB>::Ptr tree = boost::shared_ptr<pcl::search::Search<pcl::PointXYZRGB> > (new pcl::search::KdTree<pcl::PointXYZRGB>);
 
     pcl::IndicesPtr indices (new std::vector <int>);

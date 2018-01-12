@@ -44,5 +44,5 @@ It's a simple framework implementing 3 methods of segmentation over 2 types of f
 ##### Available methods
 
 - RegionGrowingRGB - Uses color information for clustering instead of normals.
-- MinCut
-- ProgressiveMorphologicalFiltering - An algorithm fit for .las files. The purpose is to segment out the ground from the scene.
+- MinCut - separates points into foreground and background based on a center points and radius of object.
+- SAC segmentation - A family of model based methods.
