@@ -4,7 +4,6 @@
 #include <vector>
 #include <string>
 
-#include <liblas/liblas.hpp>
 #include <pcl/point_types.h>
 #include <pcl/io/pcd_io.h>
 #include <pcl/search/search.h>
@@ -37,8 +36,10 @@ pcl::PointCloud <pcl::PointXYZRGB>::Ptr RegionGrowingRGB::computeSegmentation(pc
     reg.setMinClusterSize (600);
 
     std::vector <pcl::PointIndices> clusters;
+    std::cout << "Number of clusters is equal to " << clusters.size () << std::endl;
     reg.extract (clusters);
 
     pcl::PointCloud <pcl::PointXYZRGB>::Ptr colored_cloud = reg.getColoredCloud ();
+
     return colored_cloud;
 }

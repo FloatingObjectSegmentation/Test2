@@ -22,6 +22,14 @@ OBJS := $(SRCS:src/%.cpp=obj/%.o)
 all: main
 	./main data/GK_533_114.las
 
+	# data/GK_533_114.las
+	# data/cat.pcd
+	# data/regiongrowingdata.pcd
+	# data/region_growing_tutorial.pcd
+	# data/region_growing_rgb_tutorial.pcd
+	# data/min_cut_segmentation_tutorial.pcd
+	
+
 main: main.cpp ${OBJS}
 	clang++ -std=c++11 -o $@ ${INCLUDES} ${OBJS} ${LIBS} $<
 
