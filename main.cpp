@@ -22,7 +22,7 @@
 // concrete methods
 #include "RegionGrowingRGB.hpp"
 #include "MinCut.hpp"
-#include "ProgressiveMorphologicalFilter.hpp"
+#include "SACSegmentation.hpp"
 
 using namespace std;
 
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
 
 	cloud.normalizePoints();
 
-	RegionGrowingRGB met;
+	SACSegmentation met;
 	pcl::PointCloud<pcl::PointXYZRGB>::Ptr seg = met.computeSegmentation(cloud.getCloudPtr());
 
 	// visualize the data
